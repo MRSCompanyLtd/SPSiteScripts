@@ -1,0 +1,342 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/sp/site-design-script-actions.schema.json",
+    "actions": [
+        {
+            "verb": "createSPList",
+            "listName": "Accounts",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "Account List"
+                },
+                {
+                    "verb": "deleteSPField",
+                    "displayName": "Title"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Company Name",
+                    "isRequired": true,
+                    "addToDefaultView": true,
+                    "enforceUnique": true,
+                    "internalName": "CompanyName"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Company Website",
+                    "internalName": "CompanyWebsite",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Company Phone",
+                    "internalName": "CompanyPhone",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Country",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "User",
+                    "displayName": "Owner",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Notes",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Accounts",
+                    "viewFields": [
+                        "CompanyName",
+                        "CompanyWebsite",
+                        "CompanyPhone",
+                        "Country",
+                        "Owner",
+                        "Notes"
+                    ],
+                    "query": "",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                }
+            ]
+        },
+        {
+            "verb": "createSPList",
+            "listName": "Contacts",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "Contact List"
+                },
+                {
+                    "verb": "deleteSPField",
+                    "displayName": "Title"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "First Name",
+                    "internalName": "FirstName",
+                    "addToDefaultView": false,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Last Name",
+                    "internalName": "LastName",
+                    "addToDefaultView": false,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Calculated\" Hidden=\"FALSE\" DisplayName=\"Full Name\" StaticName=\"FullName\" Name=\"FullName\" ResultType=\"Text\"><FieldRefs><FieldRef Name=\"FirstName\" /><FieldRef Name=\"LastName\" /></FieldRefs><Formula>=CONCATENATE(FirstName, \" \", LastName)</Formula></Field>"
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "addToDefaultView": true,
+                    "targetListName": "Accounts",
+                    "schemaXml": "<Field Type=\"Lookup\" List=\"Accounts\" DisplayName=\"Company\" ShowField=\"CompanyName\" IsRelationship=\"TRUE\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"None\" StaticName=\"Company\" Name=\"Company\" />"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Job Title",
+                    "internalName": "JobTitle",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Email",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Phone",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Notes",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Contacts",
+                    "viewFields": [
+                        "FullName",
+                        "Company",
+                        "JobTitle",
+                        "Email",
+                        "Phone",
+                        "Notes"
+                    ],
+                    "query": "",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                }
+            ]
+        },
+        {
+            "verb": "createSPList",
+            "listName": "Activities",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "List of calls, emails and meetings"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Choice\" DisplayName=\"Activity Type\" Required=\"TRUE\" Format=\"Dropdown\" StaticName=\"ActivityType\" Name=\"ActivityType\"><Default>Email</Default><CHOICES><CHOICE>Email</CHOICE><CHOICE>Phone Call</CHOICE><CHOICE>Meeting</CHOICE></CHOICES></Field>"
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "targetListName": "Contacts",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Lookup\" List=\"Contacts\" DisplayName=\"Contact\" ShowField=\"FullName\" IsRelationship=\"TRUE\" AllowHyperlink=\"TRUE\" RelationshipDeleteBeahvior=\"None\" StaticName=\"Contact\" Name=\"Contact\" />"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "DateTime",
+                    "displayName": "Activity Date",
+                    "internalName": "ActivityDate",
+                    "addToDefaultView": true,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "User",
+                    "displayName": "Owner",
+                    "internalName": "Owner",
+                    "addToDefaultView": true,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Notes",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Activities",
+                    "viewFields": [
+                        "ActivityType",
+                        "Contact",
+                        "ActivityDate",
+                        "Owner",
+                        "Notes"
+                    ],
+                    "query": "",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                }
+            ]
+        },
+        {
+            "verb": "createSPList",
+            "listName": "Opportunities",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "List of opportunities"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Description",
+                    "addToDefaultView": true,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "targetListName": "Accounts",
+                    "schemaXml": "<Field Type=\"Lookup\" List=\"Accounts\" DisplayName=\"Account\" ShowField=\"CompanyName\" IsRelationship=\"TRUE\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"None\" StaticName=\"Account\" Name=\"Account\" />"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Currency\" Required=\"FALSE\" Decimals=\"2\" DisplayName=\"Estimated Value\" StaticName=\"EstimatedValue\" Name=\"EstimatedValue\"><Default>0</Default></Field>"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Currency\" Required=\"FALSE\" Decimals=\"2\" DisplayName=\"Actual Value\" StaticName=\"ActualValue\" Name=\"ActualValue\"><Default>0</Default></Field>"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Choice\" DisplayName=\"Status\" Required=\"TRUE\" Format=\"Dropdown\" StaticName=\"Status\" Name=\"Status\"><Default>Early Stage</Default><CHOICES><CHOICE>Early Stage</CHOICE><CHOICE>Building Proposal</CHOICE><CHOICE>Proposal Submitted</CHOICE><CHOICE>Closed - Won</CHOICE><CHOICE>Closed - Lost</CHOICE><CHOICE>Expired</CHOICE></CHOICES></Field>"
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Opportunities",
+                    "viewFields": [
+                        "Title",
+                        "Description",
+                        "Account",
+                        "EstimatedValue",
+                        "ActualValue",
+                        "Status"
+                    ],
+                    "query": "<Where><And><Neq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Expired</Value></Neq><Neq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Closed - Won</Value></Neq><Neq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Closed - Lost</Value></Neq></And></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Closed",
+                    "viewFields": [
+                        "Title",
+                        "Description",
+                        "Account",
+                        "EstimatedValue",
+                        "ActualValue",
+                        "Status"
+                    ],
+                    "query": "<Where><Or><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Closed - Won</Value></Eq><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Closed - Lost</Value></Eq></Or></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Expired",
+                    "viewFields": [
+                        "Title",
+                        "Description",
+                        "Account",
+                        "EstimatedValue",
+                        "ActualValue",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Expired</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Early Stages",
+                    "viewFields": [
+                        "Title",
+                        "Description",
+                        "Account",
+                        "EstimatedValue",
+                        "ActualValue",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Early Stage</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Awaiting",
+                    "viewFields": [
+                        "Title",
+                        "Description",
+                        "Account",
+                        "EstimatedValue",
+                        "ActualValue",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Proposal Sent</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                }
+            ]
+        }
+    ],
+    "bindata": {},
+    "version": 1
+}
