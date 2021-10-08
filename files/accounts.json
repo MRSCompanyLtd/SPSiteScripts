@@ -1,0 +1,89 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/sp/site-design-script-actions.schema.json",
+  "actions": [
+    {
+      "verb": "createSPList",
+      "listName": "Accounts",
+      "templateType": 100,
+      "subactions": [
+        {
+          "verb": "setDescription",
+          "description": "Account List"
+        },
+        {
+          "verb": "addSPFieldXml",
+          "schemaXml": "<Field Type=\"Text\" Name=\"Title\" DisplayName=\"Name\" Required=\"TRUE\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"Title\" FromBaseType=\"TRUE\" CustomFormatter=\"\" EnforceUniqueValues=\"TRUE\" Indexed=\"TRUE\" MaxLength=\"255\" />"
+        },
+        {
+          "verb": "addSPField",
+          "fieldType": "Text",
+          "displayName": "Company Website",
+          "internalName": "CompanyWebsite",
+          "isRequired": false,
+          "addToDefaultView": true
+        },
+        {
+          "verb": "addSPField",
+          "fieldType": "Text",
+          "displayName": "Company Phone",
+          "internalName": "CompanyPhone",
+          "isRequired": false,
+          "addToDefaultView": true
+        },
+        {
+          "verb": "addSPFieldXml",
+          "schemaXml": "<Field DisplayName=\"Address\" Format=\"Dropdown\" IsModern=\"TRUE\" Name=\"Address\" Required=\"TRUE\" Title=\"Address\" Type=\"Location\" StaticName=\"Address\" ID=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366\" />"
+        },
+        {
+          "verb": "addSPFieldXml",
+          "schemaXml": "<Field Type=\"Text\" DisplayName=\"Address: Country/Region\" StaticName=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366CountryOrRegion\" Name=\"CountryOrRegion\" ShowInViewForms=\"TRUE\" Required=\"FALSE\" Hidden=\"FALSE\" CanToggleHidden=\"TRUE\" FieldRef=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366\" ReadOnly=\"TRUE\" Sealed=\"TRUE\" AllowDeletion=\"TRUE\" FromBaseType=\"TRUE\" Filterable=\"TRUE\" Sortable=\"TRUE\" />"
+        },
+        {
+          "verb": "addSPFieldXml",
+          "schemaXml": "<Field Type=\"Text\" DisplayName=\"Address: State\" StaticName=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366State\" Name=\"State\" ShowInViewForms=\"TRUE\" Required=\"FALSE\" Hidden=\"FALSE\" CanToggleHidden=\"TRUE\" FieldRef=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366\" ReadOnly=\"TRUE\" Sealed=\"TRUE\" AllowDeletion=\"TRUE\" FromBaseType=\"TRUE\" Filterable=\"TRUE\" Sortable=\"TRUE\" />",
+          "addToDefaultView": true
+        },
+        {
+          "verb": "addSPFieldXml",
+          "schemaXml": "<Field Type=\"Text\" DisplayName=\"Address: City\" StaticName=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366City\" Name=\"City0\" ShowInViewForms=\"TRUE\" Required=\"FALSE\" Hidden=\"FALSE\" CanToggleHidden=\"TRUE\" FieldRef=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366\" ReadOnly=\"TRUE\" Sealed=\"TRUE\" AllowDeletion=\"TRUE\" FromBaseType=\"TRUE\" Filterable=\"TRUE\" Sortable=\"TRUE\" />",
+          "addToDefaultView": true
+        },
+        {
+          "verb": "addSPFieldXml",
+          "schemaXml": "<Field Type=\"Text\" DisplayName=\"Address: Postal Code\" StaticName=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366PostalCode\" Name=\"PostalCode0\" ShowInViewForms=\"TRUE\" Required=\"FALSE\" Hidden=\"FALSE\" CanToggleHidden=\"TRUE\" FieldRef=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366\" ReadOnly=\"TRUE\" Sealed=\"TRUE\" AllowDeletion=\"TRUE\" FromBaseType=\"TRUE\" Filterable=\"TRUE\" Sortable=\"TRUE\" />"
+        },
+        {
+          "verb": "addSPFieldXml",
+          "schemaXml": "<Field Type=\"Text\" DisplayName=\"Address: Street\" StaticName=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366Street\" Name=\"Street\" ShowInViewForms=\"TRUE\" Required=\"FALSE\" Hidden=\"FALSE\" CanToggleHidden=\"TRUE\" FieldRef=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366\" ReadOnly=\"TRUE\" Sealed=\"TRUE\" AllowDeletion=\"TRUE\" FromBaseType=\"TRUE\" Filterable=\"TRUE\" Sortable=\"TRUE\" />"
+        },
+        {
+          "verb": "addSPFieldXml",
+          "schemaXml": "<Field Type=\"Geolocation\" DisplayName=\"Address: Coordinates\" StaticName=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366GeoLoc\" Name=\"GeoLoc\" ShowInViewForms=\"TRUE\" Required=\"FALSE\" Hidden=\"FALSE\" CanToggleHidden=\"TRUE\" FieldRef=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366\" ReadOnly=\"TRUE\" Sealed=\"TRUE\" AllowDeletion=\"TRUE\" FromBaseType=\"TRUE\" Filterable=\"TRUE\" Sortable=\"TRUE\" />"
+        },
+        {
+          "verb": "addSPFieldXml",
+          "schemaXml": "<Field Type=\"Text\" DisplayName=\"Address: Name\" StaticName=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366DispName\" Name=\"DispName\" ShowInViewForms=\"TRUE\" Required=\"FALSE\" Hidden=\"FALSE\" CanToggleHidden=\"TRUE\" FieldRef=\"4b0b84ce-8c8c-4f4e-9a38-2aa26b183366\" ReadOnly=\"TRUE\" Sealed=\"TRUE\" AllowDeletion=\"TRUE\" FromBaseType=\"TRUE\" Filterable=\"TRUE\" Sortable=\"TRUE\" />"
+        },
+        {
+            "verb": "addSPFieldXml",
+            "addToDefaultView": true,
+            "schemaXml": "<Field Type=\"Choice\" DisplayName=\"Status\" Required=\"TRUE\" Format=\"Dropdown\" StaticName=\"Status\" Name=\"Status\"><Default>Prospect</Default><CHOICES><CHOICE>Client</CHOICE><CHOICE>Inactive</CHOICE><CHOICE>Cancelled</CHOICE></CHOICES></Field>"
+        },
+        {
+          "verb": "addSPField",
+          "fieldType": "User",
+          "displayName": "Owner",
+          "isRequired": false,
+          "addToDefaultView": true
+        },
+        {
+          "verb": "addSPField",
+          "fieldType": "Note",
+          "displayName": "Notes",
+          "isRequired": false,
+          "addToDefaultView": true
+        }
+      ]
+    }
+  ]
+}

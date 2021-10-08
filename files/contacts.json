@@ -1,0 +1,84 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/sp/site-design-script-actions.schema.json",
+    "actions": [
+        {
+            "verb": "createSPList",
+            "listName": "Contacts",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "First Name",
+                    "internalName": "FirstName",
+                    "addToDefaultView": false,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Last Name",
+                    "internalName": "LastName",
+                    "addToDefaultView": false,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Calculated\" DisplayName=\"Full Name\" Description=\"Calculated field for full name\" EnforceUniqueValues=\"FALSE\" Indexed=\"FALSE\" Format=\"DateOnly\" LCID=\"1033\" ResultType=\"Text\" ReadOnly=\"TRUE\" StaticName=\"FullName\" Name=\"FullName\" Required=\"FALSE\" Hidden=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\"><Formula>=CONCATENATE([First Name],\" \",[Last Name])</Formula></Field>",
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Client\" ShowField=\"LinkTitleNoMenu\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Client\" Name=\"Client\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" Group=\"\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" Hidden=\"FALSE\" Customization=\"\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+                    "targetListName": "Accounts",
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Job Title",
+                    "internalName": "JobTitle",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Email",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Phone",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Notes",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Contacts",
+                    "viewFields": [
+                        "FullName",
+                        "Company",
+                        "JobTitle",
+                        "Email",
+                        "Phone",
+                        "Notes"
+                    ],
+                    "query": "",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                }
+            ]
+        }
+    ]
+  }

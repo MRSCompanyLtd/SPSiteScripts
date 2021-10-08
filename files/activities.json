@@ -1,0 +1,101 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/sp/site-design-script-actions.schema.json",
+    "actions": [
+      {
+        "verb": "createSPList",
+        "listName": "Activities",
+        "templateType": 100,
+        "subactions": [
+          {
+            "verb": "setDescription",
+            "description": "List of calls, emails and meetings"
+          },
+          {
+            "verb": "addSPFieldXml",
+            "schemaXml": "<Field Type=\"Text\" Name=\"Title\" DisplayName=\"Activity Name\" Required=\"TRUE\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"Title\" FromBaseType=\"TRUE\" CustomFormatter=\"\" EnforceUniqueValues=\"FALSE\" Indexed=\"FALSE\" MaxLength=\"255\" />",
+            "addToDefaultView": true
+          },
+          {
+            "verb": "addSPFieldXml",
+            "schemaXml": "<Field Type=\"Choice\" DisplayName=\"Activity Type\" Required=\"TRUE\" Format=\"Dropdown\" StaticName=\"ActivityType\" Name=\"ActivityType\"><Default>Email</Default><CHOICES><CHOICE>Email</CHOICE><CHOICE>Phone Call</CHOICE><CHOICE>Meeting</CHOICE></CHOICES></Field>",
+            "addToDefaultView": true
+          },
+          {
+            "verb": "addSPLookupFieldXml",
+            "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Contact\" ShowField=\"FullName\" AllowHyperlink=\"TRUE\" StaticName=\"Contact\" Name=\"Contact\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" Group=\"\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" Hidden=\"FALSE\" Customization=\"\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+            "targetListName": "Contacts",
+            "addToDefaultView": true
+          },
+          {
+            "verb": "addSPLookupFieldXml",
+            "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Client\" ShowField=\"LinkTitleNoMenu\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Client\" Name=\"Client\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" Group=\"\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" Hidden=\"FALSE\" Customization=\"\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+            "targetListName": "Accounts",
+            "addToDefaultView": true
+          },
+          {
+            "verb": "addSPFieldXml",
+            "schemaXml": "<Field DisplayName=\"Activity Date\" Type=\"DateTime\" Required=\"TRUE\" StaticName=\"ActivityDate\" Name=\"ActivityDate\" />",
+            "addToDefaultView": true
+          },
+          {
+            "verb": "addSPFieldXml",
+            "schemaXml": "<Field DisplayName=\"Owner\" Type=\"User\" Required=\"TRUE\" List=\"UserInfo\" StaticName=\"Owner\" Name=\"Owner\" />",
+            "addToDefaultView": true
+          },
+          {
+            "verb": "addSPFieldXml",
+            "schemaXml": "<Field DisplayName=\"Notes\" Type=\"Note\" Required=\"FALSE\" StaticName=\"Notes\" Name=\"Notes\" />"
+          },
+          {
+            "verb": "addSPFieldXml",
+            "schemaXml": "<Field ReadOnly=\"TRUE\" Type=\"Computed\" Name=\"LinkTitleNoMenu\" DisplayName=\"Activity Name\" Dir=\"\" DisplayNameSrcField=\"Title\" AuthoringInfo=\"(linked to item)\" EnableLookup=\"TRUE\" ListItemMenuAllowed=\"Prohibited\" LinkToItemAllowed=\"Prohibited\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"LinkTitleNoMenu\" FromBaseType=\"TRUE\"><FieldRefs><FieldRef Name=\"Title\" /><FieldRef Name=\"LinkFilenameNoMenu\" /></FieldRefs><DisplayPattern><IfEqual><Expr1><LookupColumn Name=\"FSObjType\" /></Expr1><Expr2>1</Expr2><Then><Field Name=\"LinkFilenameNoMenu\" /></Then><Else><HTML><![CDATA[<a onfocus=\"OnLink(this)\" href=\"]]></HTML><URL /><HTML><![CDATA[\" onclick=\"EditLink2(this,]]></HTML><Counter Type=\"View\" /><HTML><![CDATA[);return false;\" target=\"_self\">]]></HTML><Column HTMLEncode=\"TRUE\" Name=\"Title\" Default=\"(no title)\" /><IfEqual><Expr1><GetVar Name=\"ShowAccessibleIcon\" /></Expr1><Expr2>1</Expr2><Then><HTML><![CDATA[<img src=\"/_layouts/15/images/blank.gif?rev=47\" class=\"ms-hidden\" border=\"0\" width=\"1\" height=\"1\" alt=\"Use SHIFT+ENTER to open the menu (new window).\"/>]]></HTML></Then></IfEqual><HTML><![CDATA[</a>]]></HTML><IfNew><HTML><![CDATA[<img src=\"/_layouts/1033/images/new.gif\" alt=\"]]></HTML><HTML>New</HTML><HTML><![CDATA[\" class=\"ms-newgif\" />]]></HTML></IfNew></Else></IfEqual></DisplayPattern></Field>"
+          },
+          {
+            "verb": "addSPFieldXml",
+            "schemaXml": "<Field ReadOnly=\"TRUE\" Type=\"Computed\" Name=\"LinkTitle\" DisplayName=\"Activity Name\" DisplayNameSrcField=\"Title\" ClassInfo=\"Menu\" AuthoringInfo=\"(linked to item with edit menu)\" ListItemMenuAllowed=\"Required\" LinkToItemAllowed=\"Prohibited\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"LinkTitle\" FromBaseType=\"TRUE\"><FieldRefs><FieldRef Name=\"Title\" /><FieldRef Name=\"LinkTitleNoMenu\" /><FieldRef Name=\"_EditMenuTableStart2\" /><FieldRef Name=\"_EditMenuTableEnd\" /></FieldRefs><DisplayPattern><FieldSwitch><Expr><GetVar Name=\"FreeForm\" /></Expr><Case Value=\"TRUE\"><Field Name=\"LinkTitleNoMenu\" /></Case><Default><HTML><![CDATA[<div class=\"ms-vb itx\" onmouseover=\"OnItem(this)\" CTXName=\"ctx]]></HTML><Field Name=\"_EditMenuTableStart2\" /><HTML><![CDATA[\">]]></HTML><Field Name=\"LinkTitleNoMenu\" /><HTML><![CDATA[</div>]]></HTML><HTML><![CDATA[<div class=\"s4-ctx\" onmouseover=\"OnChildItem(this.parentNode); return false;\">]]></HTML><HTML><![CDATA[<span>&nbsp;</span>]]></HTML><HTML><![CDATA[<a onfocus=\"OnChildItem(this.parentNode.parentNode); return false;\" onclick=\"PopMenuFromChevron(event); return false;\" href=\"javascript:;\" title=\"Open Menu\"></a>]]></HTML><HTML><![CDATA[<span>&nbsp;</span>]]></HTML><HTML><![CDATA[</div>]]></HTML></Default></FieldSwitch></DisplayPattern></Field>"
+          },
+          {
+            "verb": "addSPFieldXml",
+            "schemaXml": "<Field Hidden=\"TRUE\" ReadOnly=\"TRUE\" Type=\"Computed\" Name=\"LinkTitle2\" DisplayName=\"Activity Name\" DisplayNameSrcField=\"Title\" ClassInfo=\"Menu\" AuthoringInfo=\"(linked to item with edit menu) (old)\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"LinkTitle2\" FromBaseType=\"TRUE\"><FieldRefs><FieldRef Name=\"Title\" /><FieldRef Name=\"LinkTitleNoMenu\" /><FieldRef Name=\"_EditMenuTableStart\" /><FieldRef Name=\"_EditMenuTableEnd\" /></FieldRefs><DisplayPattern><FieldSwitch><Expr><GetVar Name=\"FreeForm\" /></Expr><Case Value=\"TRUE\"><Field Name=\"LinkTitleNoMenu\" /></Case><Default><Field Name=\"_EditMenuTableStart\" /><SetVar Name=\"ShowAccessibleIcon\" Value=\"1\" /><Field Name=\"LinkTitleNoMenu\" /><SetVar Name=\"ShowAccessibleIcon\" Value=\"0\" /><Field Name=\"_EditMenuTableEnd\" /></Default></FieldSwitch></DisplayPattern></Field>"
+          },
+          {
+            "verb": "addSPFieldXml",
+            "schemaXml": "<Field Type=\"Computed\" DisplayName=\"Content Type\" Name=\"ContentType\" DisplaceOnUpgrade=\"TRUE\" RenderXMLUsingPattern=\"TRUE\" Sortable=\"FALSE\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"ContentType\" Group=\"_Hidden\" PITarget=\"MicrosoftWindowsSharePointServices\" PIAttribute=\"ContentTypeID\" FromBaseType=\"TRUE\"><FieldRefs><FieldRef Name=\"ContentTypeId\" /></FieldRefs><DisplayPattern><MapToContentType><Column Name=\"ContentTypeId\" /></MapToContentType></DisplayPattern></Field>"
+          },
+          {
+            "verb": "addSPView",
+            "name": "All Items",
+            "viewFields": [
+              "Title",
+              "ActivityType",
+              "Contact",
+              "ActivityDate",
+              "Owner",
+              "Notes"
+            ],
+            "query": "",
+            "rowLimit": 30,
+            "isPaged": true,
+            "replaceViewFields": true
+          },
+          {
+            "verb": "addSPView",
+            "name": "Activities",
+            "viewFields": [
+              "LinkTitle",
+              "ActivityType",
+              "Contact",
+              "ActivityDate",
+              "Owner",
+              "Notes"
+            ],
+            "query": "",
+            "rowLimit": 100,
+            "isPaged": true,
+            "makeDefault": true,
+            "replaceViewFields": true
+          }
+        ]
+      }
+    ]
+  }
