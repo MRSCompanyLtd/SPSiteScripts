@@ -1,0 +1,107 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/sp/site-design-script-actions.schema.json",
+    "actions": [
+        {
+            "verb": "createSPList",
+            "listName": "Projects",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "Project List"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Text\" Name=\"Title\" DisplayName=\"Project Name\" Required=\"TRUE\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"Title\" FromBaseType=\"TRUE\" CustomFormatter=\"\" EnforceUniqueValues=\"TRUE\" Indexed=\"TRUE\" MaxLength=\"255\" />"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Billing Code",
+                    "internalName": "BillingCode",
+                    "addToDefaultView": true,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Client\" ShowField=\"LinkTitleNoMenu\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Client\" Name=\"Client\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" Group=\"\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" Hidden=\"FALSE\" Customization=\"\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+                    "targetListName": "Accounts"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Currency\" Required=\"FALSE\" Decimals=\"2\" DisplayName=\"Value\" StaticName=\"Value\" Name=\"Value\"><Default>0</Default></Field>"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Choice\" DisplayName=\"Status\" Required=\"TRUE\" Format=\"Dropdown\" StaticName=\"Status\" Name=\"Status\"><Default>Selling</Default><CHOICES><CHOICE>In Progress</CHOICE><CHOICE>Complete</CHOICE><CHOICE>Cancelled</CHOICE></CHOICES></Field>"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Description",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Selling",
+                    "viewFields": [
+                        "ProjectName",
+                        "BillingCode",
+                        "Client",
+                        "Value",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Selling</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "In Progress",
+                    "viewFields": [
+                        "ProjectName",
+                        "BillingCode",
+                        "Client",
+                        "Value",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">In Progress</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Completed",
+                    "viewFields": [
+                        "ProjectName",
+                        "BillingCode",
+                        "Client",
+                        "Value",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Complete</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Cancelled",
+                    "viewFields": [
+                        "ProjectName",
+                        "BillingCode",
+                        "Client",
+                        "Value",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Cancelled</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                }
+            ]
+        }
+    ]
+}

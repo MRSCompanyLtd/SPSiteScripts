@@ -1,0 +1,655 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/sp/site-design-script-actions.schema.json",
+    "actions": [
+        {
+            "verb": "createSPList",
+            "listName": "Accounts",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "Account List"
+                },
+                {
+                    "verb": "deleteSPField",
+                    "displayName": "Title"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Company Name",
+                    "isRequired": true,
+                    "addToDefaultView": true,
+                    "enforceUnique": true,
+                    "internalName": "CompanyName"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Company Website",
+                    "internalName": "CompanyWebsite",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Company Phone",
+                    "internalName": "CompanyPhone",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Country",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "User",
+                    "displayName": "Owner",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Notes",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Accounts",
+                    "viewFields": [
+                        "CompanyName",
+                        "CompanyWebsite",
+                        "CompanyPhone",
+                        "Country",
+                        "Owner",
+                        "Notes"
+                    ],
+                    "query": "",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                }
+            ]
+        },
+        {
+            "verb": "createSPList",
+            "listName": "Contacts",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "Contact List"
+                },
+                {
+                    "verb": "deleteSPField",
+                    "displayName": "Title"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "First Name",
+                    "internalName": "FirstName",
+                    "addToDefaultView": false,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Last Name",
+                    "internalName": "LastName",
+                    "addToDefaultView": false,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Calculated\" Hidden=\"FALSE\" DisplayName=\"Full Name\" StaticName=\"FullName\" Name=\"FullName\" ResultType=\"Text\"><FieldRefs><FieldRef Name=\"FirstName\" /><FieldRef Name=\"LastName\" /></FieldRefs><Formula>=CONCATENATE(FirstName, \" \", LastName)</Formula></Field>"
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "addToDefaultView": true,
+                    "targetListName": "Accounts",
+                    "schemaXml": "<Field Type=\"Lookup\" List=\"Accounts\" DisplayName=\"Company\" ShowField=\"CompanyName\" IsRelationship=\"TRUE\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"None\" StaticName=\"Company\" Name=\"Company\" />"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Job Title",
+                    "internalName": "JobTitle",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Email",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Phone",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Notes",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Contacts",
+                    "viewFields": [
+                        "FullName",
+                        "Company",
+                        "JobTitle",
+                        "Email",
+                        "Phone",
+                        "Notes"
+                    ],
+                    "query": "",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                }
+            ]
+        },
+        {
+            "verb": "createSPList",
+            "listName": "Activities",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "List of calls, emails and meetings"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Choice\" DisplayName=\"Activity Type\" Required=\"TRUE\" Format=\"Dropdown\" StaticName=\"ActivityType\" Name=\"ActivityType\"><Default>Email</Default><CHOICES><CHOICE>Email</CHOICE><CHOICE>Phone Call</CHOICE><CHOICE>Meeting</CHOICE></CHOICES></Field>"
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "targetListName": "Contacts",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Lookup\" List=\"Contacts\" DisplayName=\"Contact\" ShowField=\"FullName\" IsRelationship=\"TRUE\" AllowHyperlink=\"TRUE\" RelationshipDeleteBeahvior=\"None\" StaticName=\"Contact\" Name=\"Contact\" />"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "DateTime",
+                    "displayName": "Activity Date",
+                    "internalName": "ActivityDate",
+                    "addToDefaultView": true,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "User",
+                    "displayName": "Owner",
+                    "internalName": "Owner",
+                    "addToDefaultView": true,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Notes",
+                    "addToDefaultView": true,
+                    "isRequired": false
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Activities",
+                    "viewFields": [
+                        "ActivityType",
+                        "Contact",
+                        "ActivityDate",
+                        "Owner",
+                        "Notes"
+                    ],
+                    "query": "",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                }
+            ]
+        },
+        {
+            "verb": "createSPList",
+            "listName": "Opportunities",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "List of opportunities"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Description",
+                    "addToDefaultView": true,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "targetListName": "Accounts",
+                    "schemaXml": "<Field Type=\"Lookup\" List=\"Accounts\" DisplayName=\"Account\" ShowField=\"CompanyName\" IsRelationship=\"TRUE\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"None\" StaticName=\"Account\" Name=\"Account\" />"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Currency\" Required=\"FALSE\" Decimals=\"2\" DisplayName=\"Estimated Value\" StaticName=\"EstimatedValue\" Name=\"EstimatedValue\"><Default>0</Default></Field>"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Currency\" Required=\"FALSE\" Decimals=\"2\" DisplayName=\"Actual Value\" StaticName=\"ActualValue\" Name=\"ActualValue\"><Default>0</Default></Field>"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Choice\" DisplayName=\"Status\" Required=\"TRUE\" Format=\"Dropdown\" StaticName=\"Status\" Name=\"Status\"><Default>Early Stage</Default><CHOICES><CHOICE>Early Stage</CHOICE><CHOICE>Building Proposal</CHOICE><CHOICE>Proposal Submitted</CHOICE><CHOICE>Closed - Won</CHOICE><CHOICE>Closed - Lost</CHOICE><CHOICE>Expired</CHOICE></CHOICES></Field>"
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Opportunities",
+                    "viewFields": [
+                        "Title",
+                        "Description",
+                        "Account",
+                        "EstimatedValue",
+                        "ActualValue",
+                        "Status"
+                    ],
+                    "query": "<Where><And><Neq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Expired</Value></Neq><Neq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Closed - Won</Value></Neq><Neq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Closed - Lost</Value></Neq></And></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Closed",
+                    "viewFields": [
+                        "Title",
+                        "Description",
+                        "Account",
+                        "EstimatedValue",
+                        "ActualValue",
+                        "Status"
+                    ],
+                    "query": "<Where><Or><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Closed - Won</Value></Eq><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Closed - Lost</Value></Eq></Or></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Expired",
+                    "viewFields": [
+                        "Title",
+                        "Description",
+                        "Account",
+                        "EstimatedValue",
+                        "ActualValue",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Expired</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Early Stages",
+                    "viewFields": [
+                        "Title",
+                        "Description",
+                        "Account",
+                        "EstimatedValue",
+                        "ActualValue",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Early Stage</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Awaiting",
+                    "viewFields": [
+                        "Title",
+                        "Description",
+                        "Account",
+                        "EstimatedValue",
+                        "ActualValue",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Proposal Sent</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                }
+            ]
+        },
+        {
+            "verb": "createSPList",
+            "listName": "Projects",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "Project List"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Text\" Name=\"Title\" DisplayName=\"Project Name\" Required=\"TRUE\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"Title\" FromBaseType=\"TRUE\" CustomFormatter=\"\" EnforceUniqueValues=\"TRUE\" Indexed=\"TRUE\" MaxLength=\"255\" />"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Text",
+                    "displayName": "Billing Code",
+                    "internalName": "BillingCode",
+                    "addToDefaultView": true,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Client\" ShowField=\"LinkTitleNoMenu\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Client\" Name=\"Client\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" Group=\"\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" Hidden=\"FALSE\" Customization=\"\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+                    "targetListName": "Accounts"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Currency\" Required=\"FALSE\" Decimals=\"2\" DisplayName=\"Value\" StaticName=\"Value\" Name=\"Value\"><Default>0</Default></Field>"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Choice\" DisplayName=\"Status\" Required=\"TRUE\" Format=\"Dropdown\" StaticName=\"Status\" Name=\"Status\"><Default>Selling</Default><CHOICES><CHOICE>In Progress</CHOICE><CHOICE>Complete</CHOICE><CHOICE>Cancelled</CHOICE></CHOICES></Field>"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Description",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Selling",
+                    "viewFields": [
+                        "ProjectName",
+                        "BillingCode",
+                        "Client",
+                        "Value",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Selling</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "In Progress",
+                    "viewFields": [
+                        "ProjectName",
+                        "BillingCode",
+                        "Client",
+                        "Value",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">In Progress</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Completed",
+                    "viewFields": [
+                        "ProjectName",
+                        "BillingCode",
+                        "Client",
+                        "Value",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Complete</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Cancelled",
+                    "viewFields": [
+                        "ProjectName",
+                        "BillingCode",
+                        "Client",
+                        "Value",
+                        "Status"
+                    ],
+                    "query": "<Where><Eq><FieldRef Name=\"Status\" /><Value Type=\"Choice\">Cancelled</Value></Eq></Where>",
+                    "rowLimit": 100,
+                    "isPaged": true
+                }
+            ]
+        },
+        {
+            "verb": "createSPList",
+            "listName": "Project Roles",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "List of roles per project"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Text\" Name=\"Title\" DisplayName=\"Title\" Required=\"FALSE\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"Title\" FromBaseType=\"TRUE\" MaxLength=\"255\" CustomFormatter=\"\" EnforceUniqueValues=\"FALSE\" Indexed=\"FALSE\" />",
+                    "addToDefaultView": false
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Choice\" DisplayName=\"Role\" Required=\"TRUE\" Format=\"Dropdown\" StaticName=\"Role\" Name=\"Role\"><Default>Consultant</Default><CHOICES><CHOICE>Developer</CHOICE><CHOICE>QA/Test</CHOICE><CHOICE>Project Management</CHOICE><CHOICE>Pre-Sales</CHOICE><CHOICE>Training</CHOICE><CHOICE>Support</CHOICE></CHOICES></Field>"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field CommaSeparator=\"TRUE\" CustomUnitOnRight=\"TRUE\" Decimals=\"1\" Description=\"Amount of hours budgeted. Leave 0 if unidentified.\" DisplayName=\"Hours\" Format=\"Dropdown\" IsModern=\"TRUE\" Min=\"0\" Name=\"Hours\" Percentage=\"FALSE\" Required=\"TRUE\" Title=\"Hours\" Type=\"Number\" Unit=\"None\" StaticName=\"Hours\"><Default>0</Default></Field>"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field CommaSeparator=\"TRUE\" CustomUnitOnRight=\"TRUE\" Decimals=\"2\" Description=\"Hourly rate for this role and project. Leave 0 if non-billable or unidentified.\" DisplayName=\"Hourly Rate\" Format=\"Dropdown\" IsModern=\"TRUE\" Min=\"0\" Name=\"HourlyRate\" Percentage=\"FALSE\" Required=\"TRUE\" Title=\"Hourly Rate\" Type=\"Number\" Unit=\"Dollar\" StaticName=\"HourlyRate\"><Default>0</Default></Field>"
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Project\" Description=\"The project this role belongs to\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" ShowField=\"LinkTitleNoMenu\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Project\" Name=\"Project\" />",
+                    "targetListName": "Projects"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Calculated\" DisplayName=\"Project Role\" EnforceUniqueValues=\"FALSE\" Indexed=\"FALSE\" Format=\"DateOnly\" LCID=\"1033\" ResultType=\"Text\" ReadOnly=\"TRUE\" StaticName=\"ProjectRole\" Name=\"ProjectRole\"><Formula>=Role</Formula></Field>"
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Default",
+                    "viewFields": [
+                        "ProjectRole",
+                        "Project",
+                        "Hours",
+                        "HourlyRate"
+                    ],
+                    "query": "",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                }
+            ]
+        },
+        {
+            "verb": "createSPList",
+            "listName": "Timesheets",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "List of timesheet entries"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Text\" Name=\"Title\" DisplayName=\"Title\" Required=\"FALSE\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"Title\" FromBaseType=\"TRUE\" CustomFormatter=\"\" EnforceUniqueValues=\"FALSE\" Indexed=\"FALSE\" MaxLength=\"255\" />"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "User",
+                    "displayName": "Consultant",
+                    "isRequired": true,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Description",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Client\" ShowField=\"LinkTitleNoMenu\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Client\" Name=\"Client\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" Group=\"\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" Hidden=\"FALSE\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+                    "targetListName": "Accounts"
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Project\" ShowField=\"LinkTitleNoMenu\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Project\" Name=\"Project\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" Group=\"\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" Hidden=\"FALSE\" Customization=\"\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+                    "targetListName": "Projects"
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Role\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" ShowField=\"ProjectRole\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Role\" Name=\"Role\" Group=\"\" Hidden=\"FALSE\" Customization=\"\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+                    "targetListName": "Project Roles"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Number",
+                    "displayName": "Hours",
+                    "internalName": "Hours",
+                    "addToDefaultView": true,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field DisplayName=\"Date\" Type=\"DateTime\" Required=\"TRUE\" StaticName=\"TimesheetDate\" Name=\"TimesheetDate\" CustomFormatter=\"\" EnforceUniqueValues=\"FALSE\" Indexed=\"FALSE\" CalType=\"0\" Format=\"DateOnly\" FriendlyDisplayFormat=\"Relative\" />"
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Default",
+                    "viewFields": [
+                        "Consultant",
+                        "Description",
+                        "Client",
+                        "Project",
+                        "Role",
+                        "Date",
+                        "Hours"
+                    ],
+                    "query": "",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                }
+            ]
+        },
+        {
+            "verb": "createSPList",
+            "listName": "Approved",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "List of timesheet entries"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Text\" Name=\"Title\" DisplayName=\"Title\" Required=\"FALSE\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"Title\" FromBaseType=\"TRUE\" CustomFormatter=\"\" EnforceUniqueValues=\"FALSE\" Indexed=\"FALSE\" MaxLength=\"255\" />"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "User",
+                    "displayName": "Consultant",
+                    "isRequired": true,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Description",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Client\" ShowField=\"LinkTitleNoMenu\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Client\" Name=\"Client\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" Group=\"\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" Hidden=\"FALSE\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+                    "targetListName": "Accounts"
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Project\" ShowField=\"LinkTitleNoMenu\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Project\" Name=\"Project\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" Group=\"\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" Hidden=\"FALSE\" Customization=\"\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+                    "targetListName": "Projects"
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Role\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" ShowField=\"ProjectRole\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Role\" Name=\"Role\" Group=\"\" Hidden=\"FALSE\" Customization=\"\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+                    "targetListName": "Project Roles"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Description=\"Are these hours billable?\" DisplayName=\"Billable\" Format=\"Dropdown\" IsModern=\"TRUE\" Name=\"Billable\" Required=\"TRUE\" Title=\"Billable\" Type=\"Boolean\" StaticName=\"Billable\" <Default>1</Default></Field>"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Number",
+                    "displayName": "Hours",
+                    "internalName": "Hours",
+                    "addToDefaultView": true,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field DisplayName=\"Date\" Type=\"DateTime\" Required=\"TRUE\" StaticName=\"TimesheetDate\" Name=\"TimesheetDate\" CustomFormatter=\"\" EnforceUniqueValues=\"FALSE\" Indexed=\"FALSE\" CalType=\"0\" Format=\"DateOnly\" FriendlyDisplayFormat=\"Relative\" />"
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Default",
+                    "viewFields": [
+                        "Date",
+                        "Consultant",
+                        "Client",
+                        "Project",
+                        "Role",
+                        "Hours",
+                        "Billable",
+                        "Description"
+                    ],
+                    "query": "",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                }
+            ]
+        }
+    ],
+    "bindata": {},
+    "version": 1
+}

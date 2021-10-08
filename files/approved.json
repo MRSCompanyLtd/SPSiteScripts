@@ -1,0 +1,85 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/sp/site-design-script-actions.schema.json",
+    "actions": [
+        {
+            "verb": "createSPList",
+            "listName": "Approved",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "List of timesheet entries"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Text\" Name=\"Title\" DisplayName=\"Title\" Required=\"FALSE\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"Title\" FromBaseType=\"TRUE\" CustomFormatter=\"\" EnforceUniqueValues=\"FALSE\" Indexed=\"FALSE\" MaxLength=\"255\" />"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "User",
+                    "displayName": "Consultant",
+                    "isRequired": true,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Note",
+                    "displayName": "Description",
+                    "isRequired": false,
+                    "addToDefaultView": true
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Client\" ShowField=\"LinkTitleNoMenu\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Client\" Name=\"Client\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" Group=\"\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" Hidden=\"FALSE\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+                    "targetListName": "Accounts"
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Project\" ShowField=\"LinkTitleNoMenu\" AllowHyperlink=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Project\" Name=\"Project\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" Group=\"\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" Hidden=\"FALSE\" Customization=\"\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+                    "targetListName": "Projects"
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Role\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" ShowField=\"ProjectRole\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Role\" Name=\"Role\" Group=\"\" Hidden=\"FALSE\" Customization=\"\" ReadOnly=\"FALSE\" PITarget=\"\" PrimaryPITarget=\"\" PIAttribute=\"\" PrimaryPIAttribute=\"\" Aggregation=\"\" Node=\"\" />",
+                    "targetListName": "Project Roles"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Description=\"Are these hours billable?\" DisplayName=\"Billable\" Format=\"Dropdown\" IsModern=\"TRUE\" Name=\"Billable\" Required=\"TRUE\" Title=\"Billable\" Type=\"Boolean\" StaticName=\"Billable\" <Default>1</Default></Field>"
+                },
+                {
+                    "verb": "addSPField",
+                    "fieldType": "Number",
+                    "displayName": "Hours",
+                    "internalName": "Hours",
+                    "addToDefaultView": true,
+                    "isRequired": true
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field DisplayName=\"Date\" Type=\"DateTime\" Required=\"TRUE\" StaticName=\"TimesheetDate\" Name=\"TimesheetDate\" CustomFormatter=\"\" EnforceUniqueValues=\"FALSE\" Indexed=\"FALSE\" CalType=\"0\" Format=\"DateOnly\" FriendlyDisplayFormat=\"Relative\" />"
+                },
+                {
+                    "verb": "addSPView",
+                    "name": "Default",
+                    "viewFields": [
+                        "Date",
+                        "Consultant",
+                        "Client",
+                        "Project",
+                        "Role",
+                        "Hours",
+                        "Billable",
+                        "Description"
+                    ],
+                    "query": "",
+                    "rowLimit": 100,
+                    "isPaged": true,
+                    "makeDefault": true
+                }
+            ]
+        }
+    ]
+}

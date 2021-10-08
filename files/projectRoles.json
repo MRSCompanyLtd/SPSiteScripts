@@ -1,0 +1,47 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/sp/site-design-script-actions.schema.json",
+    "actions": [
+        {
+            "verb": "createSPList",
+            "listName": "Project Roles",
+            "templateType": 100,
+            "subactions": [
+                {
+                    "verb": "setDescription",
+                    "description": "List of roles per project"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "schemaXml": "<Field Type=\"Text\" Name=\"Title\" DisplayName=\"Title\" Required=\"FALSE\" SourceID=\"http://schemas.microsoft.com/sharepoint/v3\" StaticName=\"Title\" FromBaseType=\"TRUE\" MaxLength=\"255\" CustomFormatter=\"\" EnforceUniqueValues=\"FALSE\" Indexed=\"FALSE\" />",
+                    "addToDefaultView": false
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Choice\" DisplayName=\"Role\" Required=\"TRUE\" Format=\"Dropdown\" StaticName=\"Role\" Name=\"Role\"><Default>Consultant</Default><CHOICES><CHOICE>Developer</CHOICE><CHOICE>QA/Test</CHOICE><CHOICE>Project Management</CHOICE><CHOICE>Pre-Sales</CHOICE><CHOICE>Training</CHOICE><CHOICE>Support</CHOICE></CHOICES></Field>"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field CommaSeparator=\"TRUE\" CustomUnitOnRight=\"TRUE\" Decimals=\"1\" Description=\"Amount of hours budgeted. Leave 0 if unidentified.\" DisplayName=\"Hours\" Format=\"Dropdown\" IsModern=\"TRUE\" Min=\"0\" Name=\"Hours\" Percentage=\"FALSE\" Required=\"TRUE\" Title=\"Hours\" Type=\"Number\" Unit=\"None\" StaticName=\"Hours\"><Default>0</Default></Field>"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field CommaSeparator=\"TRUE\" CustomUnitOnRight=\"TRUE\" Decimals=\"2\" Description=\"Hourly rate for this role and project. Leave 0 if non-billable or unidentified.\" DisplayName=\"Hourly Rate\" Format=\"Dropdown\" IsModern=\"TRUE\" Min=\"0\" Name=\"HourlyRate\" Percentage=\"FALSE\" Required=\"TRUE\" Title=\"Hourly Rate\" Type=\"Number\" Unit=\"Dollar\" StaticName=\"HourlyRate\"><Default>0</Default></Field>"
+                },
+                {
+                    "verb": "addSPLookupFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Lookup\" DisplayName=\"Project\" Description=\"The project this role belongs to\" Required=\"TRUE\" EnforceUniqueValues=\"FALSE\" ShowField=\"LinkTitleNoMenu\" UnlimitedLengthInDocumentLibrary=\"FALSE\" Indexed=\"TRUE\" RelationshipDeleteBehavior=\"Restrict\" StaticName=\"Project\" Name=\"Project\" />",
+                    "targetListName": "Projects"
+                },
+                {
+                    "verb": "addSPFieldXml",
+                    "addToDefaultView": true,
+                    "schemaXml": "<Field Type=\"Calculated\" DisplayName=\"Project Role\" EnforceUniqueValues=\"FALSE\" Indexed=\"FALSE\" Format=\"DateOnly\" LCID=\"1033\" ResultType=\"Text\" ReadOnly=\"TRUE\" StaticName=\"ProjectRole\" Name=\"ProjectRole\"><Formula>=Role</Formula></Field>"
+                }
+            ]
+        }
+    ]
+}
