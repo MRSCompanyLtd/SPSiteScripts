@@ -615,7 +615,7 @@
                 },
                 {
                     "verb": "addSPFieldXml",
-                    "schemaXml": "<Field Description=\"Are these hours billable?\" DisplayName=\"Billable\" Format=\"Dropdown\" IsModern=\"TRUE\" Name=\"Billable\" Required=\"TRUE\" Title=\"Billable\" Type=\"Boolean\" StaticName=\"Billable\" <Default>1</Default></Field>"
+                    "schemaXml": "<Field Description=\"Are these hours billable?\" DisplayName=\"Billable\" Format=\"Dropdown\" IsModern=\"TRUE\" Name=\"Billable\" Required=\"TRUE\" Title=\"Billable\" Type=\"Boolean\" StaticName=\"Billable\" />"
                 },
                 {
                     "verb": "addSPField",
